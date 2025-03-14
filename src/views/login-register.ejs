@@ -18,26 +18,26 @@
     </div>
     <div class="mx-auto">
         <h1 class="text-3xl font-bold">Register</h1>
-        <form action="" method="POST" enctype="multipart/form-data" class="border my-10 w-[500px] h-full grid grid-rows-6 justify-center items-center align-middle py-10 rounded-xl bg-white">
+        <form action="/company/register" method="POST" enctype="multipart/form-data" class="border my-10 w-[500px] h-full grid grid-rows-6 justify-center items-center align-middle py-10 rounded-xl bg-white">
             <div class="grid grid-cols-[.75fr_1fr] justify-center items-center text-center">
                 <label for="" class="">Company Name</label>
-                <input type="email" class="border" required name="user_email" id="user_email">
+                <input type="text" class="border" required name="c_name" id="c_name">
             </div>
             <div class="grid grid-cols-[.75fr_1fr] justify-center items-center text-center">
                 <label for="">Company Email</label>
-                <input type="password" class="border" required name="user_password" id="user_password">
+                <input type="email" class="border" required name="c_email" id="c_email">
             </div>
             <div class="grid grid-cols-[.75fr_1fr] justify-center items-center text-center">
                 <label for="">Password</label>
-                <input type="password" class="border" required name="user_password" id="user_password">
+                <input type="password" class="border" required name="c_pass" id="c_pass">
             </div>
             <div class="grid grid-cols-[.75fr_1fr] justify-center items-center text-center">
                 <label for="">Re-Type Password</label>
-                <input type="password" class="border" required name="user_password" id="user_password">
+                <input type="password" class="border" required name="c_pass_re" id="c_pass_re">
             </div>
             <div class="grid grid-cols-[1fr_1fr] justify-center items-center text-center">
                 <label for="">Type of Company</label>
-                <select name="" id="" class="border px-2">
+                <select name="c_type" id="c_type" class="border px-2">
                     <% companyType.rows.forEach((type) => { %>
                         <option value="<%= type.Id %>"><%= type.Type %></option>
                     <% }); %>

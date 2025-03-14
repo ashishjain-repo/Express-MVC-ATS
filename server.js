@@ -11,6 +11,9 @@ import { configureStaticPaths } from './src/utils/index.js';
 import { fileURLToPath } from 'url';
 import { testDatabase } from './src/models/index.js';
 
+// Other Routes
+import companyRoute from './src/routes/company/index.js';
+
 // Flash Message
 import flashMessages from './src/middleware/flash-message.js';
 
@@ -84,6 +87,7 @@ app.use(flashMessages);
  */
 
 app.use('/', homeRoute);
+app.use('/company', companyRoute);
 
 /**
  * Start the server
