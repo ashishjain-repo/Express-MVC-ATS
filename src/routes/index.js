@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import dbClient from '../models/index.js';
 
 const router = Router();
  
@@ -14,5 +15,12 @@ router.get('/contact', async (req, res) => {
 router.get('/login-register', async (req, res) => {
     res.render('login-register', {title: 'Login/Register'})
 });
+
+router.post('/contact', async(req, res) => {
+    const query = `INSERT INTO "Contact" ("Name", "Email", "Message") VALUES ($1, $2, $3)`;
+    const fields = [req.body.user_name, req.body.user_email, req.body.user_message];
+    await dbClient.query(query, fields);
+    res.redirect('/');
+})
 
 export default router;
