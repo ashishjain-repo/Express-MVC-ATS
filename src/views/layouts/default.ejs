@@ -3,14 +3,19 @@
 <head>
     <%- include('../partials/head') %>
 </head>
-<body class="bg-blue-400">
+<% if(flash) { %>
+    <% flash.forEach((obj) => { %>
+        <%- include('../partials/flash.ejs', {type: obj.type, message: obj.message}) %>
+    <% }); %>
+<% } %>
+<body class="bg-blue-500">
     <header>
         <%- include('../partials/header') %>
     </header>
-    <main>
+    <main class="h-screen">
         <%- body %>
     </main>
-    <footer>
+    <footer class="relative bottom-0">
         <%- include('../partials/footer') %>
     </footer>
 </body>

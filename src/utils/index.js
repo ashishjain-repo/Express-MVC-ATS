@@ -47,11 +47,12 @@ const configureStaticPaths = (app) => {
  * @returns {string} The navigation menu.
  */
 const getNav = () => {
-    let nav = '<ul class="grid grid-cols-3 justify-center items-center text-center w-full text-black font-bold">';
+    let nav = '<ul class="grid grid-cols-4 justify-center items-center text-center w-full text-black font-bold">';
     return `${nav}
     <li><a class="border rounded-sm w-36 py-4 block bg-gray-300 hover:bg-green-400 transition-all" href="/">Home</a></li>
     <li><a class="border rounded-sm w-36 py-4 block bg-gray-300 hover:bg-green-400 transition-all" href="/contact">Contact</a></li>
     <li><a class="border rounded-sm w-36 py-4 block bg-gray-300 hover:bg-green-400 transition-all" href="/login-register">Login/Register</a></li>
+    <li><a class="border rounded-sm w-36 py-4 block bg-gray-300 hover:bg-green-400 transition-all" href="/jobs">Jobs</a></li>
     </ul>`
 };
 
