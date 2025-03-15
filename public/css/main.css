@@ -238,29 +238,17 @@
   .w-full {
     width: 100%;
   }
-  .border-collapse {
-    border-collapse: collapse;
-  }
-  .resize {
-    resize: both;
-  }
   .grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-  .grid-cols-5 {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
   .grid-cols-\[\.75fr_1fr\] {
     grid-template-columns: .75fr 1fr;
   }
   .grid-cols-\[0\.5fr_1fr\] {
     grid-template-columns: 0.5fr 1fr;
-  }
-  .grid-cols-\[0\.25fr_1fr\] {
-    grid-template-columns: 0.25fr 1fr;
   }
   .grid-cols-\[0\.75fr_1fr\] {
     grid-template-columns: 0.75fr 1fr;
@@ -271,11 +259,11 @@
   .grid-cols-\[1fr_2fr\] {
     grid-template-columns: 1fr 2fr;
   }
-  .grid-rows-5 {
-    grid-template-rows: repeat(5, minmax(0, 1fr));
-  }
   .grid-rows-6 {
     grid-template-rows: repeat(6, minmax(0, 1fr));
+  }
+  .grid-rows-7 {
+    grid-template-rows: repeat(7, minmax(0, 1fr));
   }
   .items-center {
     align-items: center;
@@ -338,9 +326,6 @@
   .py-4 {
     padding-block: calc(var(--spacing) * 4);
   }
-  .py-5 {
-    padding-block: calc(var(--spacing) * 5);
-  }
   .py-10 {
     padding-block: calc(var(--spacing) * 10);
   }
@@ -390,13 +375,6 @@
   .italic {
     font-style: italic;
   }
-  .underline {
-    text-decoration-line: underline;
-  }
-  .outline {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
-  }
   .transition-all {
     transition-property: all;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
@@ -418,9 +396,4 @@
 @property --tw-font-weight {
   syntax: "*";
   inherits: false;
-}
-@property --tw-outline-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
 }

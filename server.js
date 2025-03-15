@@ -13,6 +13,7 @@ import { testDatabase } from './src/models/index.js';
 
 // Other Routes
 import companyRoute from './src/routes/company/index.js';
+import applicantRoute from './src/routes/applicant/index.js';
 
 // Flash Message
 import flashMessages from './src/middleware/flash-message.js';
@@ -88,6 +89,7 @@ app.use(flashMessages);
 
 app.use('/', homeRoute);
 app.use('/company', companyRoute);
+app.use('/applicant', applicantRoute);
 
 /**
  * Start the server

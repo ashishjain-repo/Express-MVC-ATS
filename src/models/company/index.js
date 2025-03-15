@@ -13,4 +13,11 @@ const addNewUser = async(FName, LName, Email, Password) => {
     dbClient.query(query, fields);
 }
 
-export {checkExistingUser, addNewUser}
+const verifyUser = async(email, password) => {
+    const query = `SELECT "Id" FROM "public"."User" WHERE "Email" = $1 AND "Password" = $2`;
+    const fields = [email, password];
+    const result = await dbClient.query(query, fields);
+    return result.rows[0].Id;
+};
+
+export {checkExistingUser, addNewUser, verifyUser}

@@ -1,15 +1,15 @@
-<h1 class="text-center text-4xl my-10">Login/Register - For Companies</h1>
+<h1 class="text-center text-4xl my-10">Login/Register - For Applicants</h1>
 <div class="grid grid-cols-2 w-full justify-center items-center text-center my-10">
     <div class="mx-auto">
         <h1 class="text-3xl font-bold">Login</h1>
-        <form action="" method="POST" enctype="multipart/form-data" class="border my-10 w-96 h-60 grid justify-center items-center align-middle py-10 rounded-xl bg-white">
+        <form action="/applicant/login" method="POST" enctype="multipart/form-data" class="border my-10 w-96 h-60 grid justify-center items-center align-middle py-10 rounded-xl bg-white">
             <div class="grid grid-cols-[0.5fr_1fr] justify-center items-center text-center">
                 <label for="" class="">Email</label>
-                <input type="email" class="border" required name="user_email" id="user_email">
+                <input type="email" class="border" required name="u_email" id="u_email">
             </div>
             <div class="grid grid-cols-[0.5fr_1fr] justify-center items-center text-center">
                 <label for="">Password</label>
-                <input type="password" class="border" required name="user_password" id="user_password">
+                <input type="password" class="border" required name="u_pass" id="u_pass">
             </div>
             <div>
                 <button type="submit" class="py-2 px-4 rounded bg-blue-400 hover:bg-green-400 transition-all text-white font-semibold">Login</button>
@@ -18,33 +18,40 @@
     </div>
     <div class="mx-auto">
         <h1 class="text-3xl font-bold">Register</h1>
-        <form action="/company/register" method="POST" enctype="multipart/form-data" class="border my-10 w-[500px] h-full grid grid-rows-6 justify-center items-center align-middle py-10 rounded-xl bg-white">
+        <form action="/applicant/register" method="POST" enctype="multipart/form-data" class="border my-10 w-[500px] h-full grid grid-rows-7 justify-center items-center align-middle rounded-xl bg-white py-1">
             <div class="grid grid-cols-[.75fr_1fr] justify-center items-center text-center">
-                <label for="" class="">Company Name</label>
-                <input type="text" class="border" required name="c_name" id="c_name">
+                <label for="" class="">Firstname</label>
+                <input type="text" class="border" required name="u_fname" id="u_fname">
             </div>
             <div class="grid grid-cols-[.75fr_1fr] justify-center items-center text-center">
-                <label for="">Company Email</label>
-                <input type="email" class="border" required name="c_email" id="c_email">
+                <label for="" class="">Lastname</label>
+                <input type="text" class="border" required name="u_lname" id="u_lname">
+            </div>
+            <div class="grid grid-cols-[.75fr_1fr] justify-center items-center text-center">
+                <label for="" class="">Gender</label>
+                <div>
+                    <input type="radio" name="u_gender" value="Male">
+                    <label for="">Male</label>
+                    <input type="radio" name="u_gender" value="Female">
+                    <label for="">Female</label>
+                    <input type="radio" name="u_gender" value="Other">
+                    <label for="">Other</label>
+                </div>
+            </div>
+            <div class="grid grid-cols-[.75fr_1fr] justify-center items-center text-center">
+                <label for="">Email</label>
+                <input type="email" class="border" required name="u_email" id="u_email">
             </div>
             <div class="grid grid-cols-[.75fr_1fr] justify-center items-center text-center">
                 <label for="">Password</label>
-                <input type="password" class="border" required name="c_pass" id="c_pass">
+                <input type="password" class="border" required name="u_pass" id="u_pass">
             </div>
             <div class="grid grid-cols-[.75fr_1fr] justify-center items-center text-center">
                 <label for="">Re-Type Password</label>
-                <input type="password" class="border" required name="c_pass_re" id="c_pass_re">
-            </div>
-            <div class="grid grid-cols-[1fr_1fr] justify-center items-center text-center">
-                <label for="">Type of Company</label>
-                <select name="c_type" id="c_type" class="border px-2">
-                    <% companyType.rows.forEach((type) => { %>
-                        <option value="<%= type.Id %>"><%= type.Type %></option>
-                    <% }); %>
-                </select>
+                <input type="password" class="border" required name="u_pass_re" id="u_pass_re">
             </div>
             <div class="my-2">
-                <button type="submit" class="py-2 px-4 rounded bg-blue-400 hover:bg-green-400 transition-all text-white font-semibold">Login</button>
+                <button type="submit" class="py-2 px-4 rounded bg-blue-400 hover:bg-green-400 transition-all text-white font-semibold">Register</button>
             </div>
         </form>
     </div>

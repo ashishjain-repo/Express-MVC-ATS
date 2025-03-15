@@ -5,7 +5,7 @@ const mode = process.env.MODE || 'production';
 
 const configureNodeEnvironment = async (req, res, next) => {
     res.locals.isDevMode = mode.includes('dev');
-    res.locals.navHTML = await getNav();
+    res.locals.navHTML = await getNav(req);
     res.locals.port = port;
     res.locals.scripts = [];
     res.locals.styles = [];
