@@ -20,4 +20,11 @@ const verifyUser = async(email, password) => {
     return result.rows[0];
 };
 
-export {checkExistingUser, addNewUser, verifyUser}
+const getUserDetails = async(id) => {
+    const query = `SELECT CONCAT("Firstname",' ',"Lastname") AS "Name", "Gender", "Email", "Phone", "LinkedIn", "FullAddress" FROM "public"."Applicant" WHERE "Id" = $1`;
+    const field = [id];
+    const result = await dbClient.query(query, field);
+    return result;
+}
+
+export {checkExistingUser, addNewUser, verifyUser, getUserDetails}

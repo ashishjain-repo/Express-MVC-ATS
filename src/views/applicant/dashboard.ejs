@@ -1,0 +1,19 @@
+<form action="/applicant/signout" method="POST" class="text-right mx-10"><button type="submit" class="underline text-gray-600-600 font-bold cursor-pointer">Sign Out</button></form>
+<div class="w-full">
+    <div>
+        <% if(user.Gender=="Male" ) { %>
+            <img src="/images/web/male.png" alt="" class="mx-auto">
+            <% } else if(user.Gender=="Female" ) { %>
+                <img src="/images/web/female.png" class="mx-auto" alt="">
+                <% } else { %>
+                    <img src="/images/web/other.png" alt="">
+                    <% } %>
+    </div>
+    <div class="text-4xl text-center text-white grid gap-2">
+        <p>Name: <b class="text-black"><%= user.Name %></b></p>
+        <p>Email: <b class="text-black"><%= user.Email %></b></p>
+        <p>Phone: <b class="text-black"><%= user.Phone ? user.Phone : 'Not Added' %></b></p>
+        <p>LinkedIn Profile: <b class="text-black"><%= user.LinkedIn ? user.LinkedIn : 'Not Added' %></b></p>
+        <p>Address: <b class="text-black"><%= user.FullAddress ? user.FullAddress : 'Not Added' %></b></p>
+    </div>
+</div>

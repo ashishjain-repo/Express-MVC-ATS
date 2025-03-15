@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkExistingUser, addNewUser, verifyUser } from "../../models/applicant/index.js";
+import { checkExistingUser, addNewUser, verifyUser, getUserDetails} from "../../models/applicant/index.js";
 
 const router = Router();
 
@@ -46,14 +46,22 @@ router.post('/login', async (req, res) => {
 
 router.get('/dashboard', async (req, res) => {
     if (req.session.isAuthorized == true) {
-        console.log("Running");
-        res.render('applicant/dashboard', { title: "Applicant Dashboard" });
+        const result = await getUserDetails(req.session.applicant);
+        const user = result.rows[0];
+        console.log(user);
+        res.render('applicant/dashboard', { title: "Applicant Dashboard", user });
     }
     else {
         req.flash("Error", "Please login");
         res.redirect('/applicant/login-register');
         console.log("Error");
     }
+});
+
+router.post('/signout', async(req, res) => {
+    req.session.isAuthorized = false;
+    req.session.applicant = undefined;
+    res.redirect('/applicant/login-register');
 });
 
 export default router;
