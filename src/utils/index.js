@@ -51,8 +51,8 @@ const getNav = () => {
     return `${nav}
     <li><a class="border rounded-sm w-36 py-4 block bg-gray-300 hover:bg-green-400 transition-all" href="/">Home</a></li>
     <li><a class="border rounded-sm w-36 py-4 block bg-gray-300 hover:bg-green-400 transition-all" href="/contact">Contact</a></li>
-    <li><a class="border rounded-sm w-36 py-4 block bg-gray-300 hover:bg-green-400 transition-all" href="/login-register">Login/Register</a></li>
-    <li><a class="border rounded-sm w-36 py-4 block bg-gray-300 hover:bg-green-400 transition-all" href="/jobs">Jobs</a></li>
+    <li><a class="border rounded-sm w-36 py-4 block bg-gray-300 hover:bg-green-400 transition-all" href="/company/login-register">For Company</a></li>
+    <li><a class="border rounded-sm w-36 py-4 block bg-gray-300 hover:bg-green-400 transition-all" href="/applicant/login-register">For Applicant</a></li>
     </ul>`
 };
 

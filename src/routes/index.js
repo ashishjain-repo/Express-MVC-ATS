@@ -19,14 +19,6 @@ router.post('/contact', async(req, res) => {
     res.redirect('/');
 });
 
-router.get('/login-register', async (req, res) => {
-    const query = 'SELECT "Id", "Type" FROM "public"."CompanyType"';
-    const companyType = await dbClient.query(query);
-    res.render('login-register', {title: 'Login/Register', companyType});
-});
 
-router.post('/login-register/register', async(req, res) => {
-    const query = `INSERT INTO "Company" () VALUES ()`
-})
 
 export default router;

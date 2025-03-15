@@ -3,16 +3,18 @@
 <head>
     <%- include('../partials/head') %>
 </head>
-<% if(flash) { %>
-    <% flash.forEach((obj) => { %>
-        <%- include('../partials/flash.ejs', {type: obj.type, message: obj.message}) %>
-    <% }); %>
-<% } %>
 <body class="bg-blue-500">
     <header>
         <%- include('../partials/header') %>
     </header>
     <main class="h-screen">
+        <% if(flash) { %>
+            <% flash.forEach((obj) => { %>
+                <div class="<%- obj.type %>">
+                    <p><%= obj.message %></p>
+                </div>
+            <% }); %>
+        <% } %>
         <%- body %>
     </main>
     <footer class="relative bottom-0">
