@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkExistingUser, addNewUser, verifyUser, getUserDetails} from "../../models/applicant/index.js";
+import { checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData} from "../../models/applicant/index.js";
 
 const router = Router();
 
@@ -57,11 +57,46 @@ router.get('/dashboard', async (req, res) => {
         console.log("Error");
     }
 });
+router.get('/settings', async (req, res) => {
+    if (req.session.isAuthorized == true) {
+        const result = await getUserDetails(req.session.applicant);
+        const user = result.rows[0];
+        console.log(user);
+        res.render('applicant/settings', { title: "Applicant Settings", user });
+    }
+    else {
+        req.flash("Error", "Please login");
+        res.redirect('/applicant/login-register');
+        console.log("Error");
+    }
+});
 
 router.post('/signout', async(req, res) => {
     req.session.isAuthorized = false;
     req.session.applicant = undefined;
     res.redirect('/applicant/login-register');
 });
+
+router.post('/update', async(req, res) => {
+    try{
+        const column = req.body.u_choice;
+        const data = req.body.u_detail;
+        const user = req.session.applicant;
+        if(column == "Phone"){
+            if(isNaN(data)){
+                console.log('Works');
+                req.flash("error", "Please add valid number");
+                throw new Error();
+            }
+            await updateData(column, parseInt(data), user);
+        }else{
+            await updateData(column, data, user);
+        }
+        res.redirect('/applicant/dashboard');
+    }catch(err){
+        req.flash("error", "Unable to update");
+        res.redirect('/applicant/dashboard');
+    }
+})
 
 export default router;

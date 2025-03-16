@@ -25,6 +25,12 @@ const getUserDetails = async(id) => {
     const field = [id];
     const result = await dbClient.query(query, field);
     return result;
-}
+};
 
-export {checkExistingUser, addNewUser, verifyUser, getUserDetails}
+const updateData = async(column, data, user) => {
+    const query = `UPDATE "public"."Applicant" SET "${column}" = $1 WHERE "Id" = $2`;
+    const fields = [data, user];
+    dbClient.query(query, fields);
+};
+
+export {checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData}

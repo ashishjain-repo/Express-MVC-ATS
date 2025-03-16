@@ -20,4 +20,10 @@ const verifyUser = async(email, password) => {
     return result.rows[0].Id;
 };
 
-export {checkExistingUser, addNewUser, verifyUser}
+const getCompanyTypes = async() => {
+    const query = `SELECT "Id", "Type" FROM "public"."CompanyType"`;
+    const result = await dbClient.query(query);
+    return result.rows;
+}
+
+export {checkExistingUser, addNewUser, verifyUser, getCompanyTypes}

@@ -1,0 +1,20 @@
+<%- include('./navbar') %>
+
+<div class="w-[500px] mx-auto bg-white border p-2 my-5">
+    <h2 class="text-center">Update Job Related Details</h2>
+    <form action="/applicant/update" method="POST" class="grid grid-cols-[1fr_1fr_.5fr] gap-2 mx-auto items-center justify-center align-middle">
+        <div class="text-center mx-auto">
+        <select name="u_choice" id="" class="border px-2">
+            <option value="Phone">Phone</option>
+            <option value="LinkedIn">LinkedIn Profile</option>
+            <option value="FullAddress">Address</option>
+        </select>
+    </div>
+    <div class="mx-auto text-center">
+        <input type="text" name="u_detail" class="border">
+    </div>
+    <div>
+        <button type="submit" class="rounded-sm py-1 px-2 bg-red-500 hover:bg-green-500 text-white transition-all">Update</button>
+    </div>
+    </form>
+</div>
