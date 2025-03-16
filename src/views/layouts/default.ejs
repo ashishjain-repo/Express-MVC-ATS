@@ -7,7 +7,7 @@
     <header>
         <%- include('../partials/header') %>
     </header>
-    <main class="h-screen">
+    <main class="">
         <% if(flash) { %>
             <% flash.forEach((obj) => { %>
                 <div class="<%- obj.type %>">
@@ -17,7 +17,7 @@
         <% } %>
         <%- body %>
     </main>
-    <footer class="relative bottom-0">
+    <footer class="sticky bottom-0">
         <%- include('../partials/footer') %>
     </footer>
 </body>

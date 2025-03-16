@@ -24,6 +24,15 @@ const getCompanyTypes = async() => {
     const query = `SELECT "Id", "Type" FROM "public"."CompanyType"`;
     const result = await dbClient.query(query);
     return result.rows;
+};
+
+const createNewCompany = async(companyName, companyTypeId, userId) => {
+    const query = `INSERT INTO "public"."Company" ("Name", "CompanyTypeId", "UserId") VALUES ($1, $2, $3)`;
+    const fields = [companyName, companyTypeId, userId];
+};
+
+const createNewJob = async(title, payRangeStart, payRangeEnd, description, location, companyId) => {
+    
 }
 
 export {checkExistingUser, addNewUser, verifyUser, getCompanyTypes}

@@ -1,22 +1,60 @@
 <%- include('./navbar') %>
-<div>
-    <h1 class="text-center text-5xl my-10">Create your Company Profile Here</h1>
-<form action="/company/create" class="border bg-white w-96 mx-auto grid grid-rows-3 justify-center align-middle items-center rounded-sm py-5 gap-4">
-    <div class="grid grid-cols-[.75fr_1fr]">
-        <label for="">Company Name</label>
-        <input type="text" name="c_name" class="border w-48 px-1">
-    </div>
-    <div class="grid grid-cols-[.75fr_1fr]">
-        <label for="">Company Type</label>
-        <select name="c_type" id="" class="border w-48 px-1">
-            <% companyTypes.forEach((type) => { %>
-                <option value="<%= type.Id %>"><%= type.Type %></option>
-            <% }); %>
-        </select>
-    </div>
-    <div class="mx-auto">
-        <button type="submit" class="py-1 px-2 rounded text-center bg-blue-400 hover:bg-green-400 transition-all text-white">Create</button>
+    <div>
+        <h1 class="text-center text-5xl my-10">Create your Company Profile Here</h1>
+        <form action="/company/create"
+            class="border bg-white w-96 mx-auto grid grid-rows-3 justify-center align-middle items-center rounded-sm py-5 gap-4">
+            <div class="grid grid-cols-[.75fr_1fr]">
+                <label for="">Company Name</label>
+                <input type="text" name="c_name" class="border w-48 px-1" required>
+            </div>
+            <div class="grid grid-cols-[.75fr_1fr]">
+                <label for="">Company Type</label>
+                <select name="c_type" id="" class="border w-48 px-1" required>
+                    <% companyTypes.forEach((type)=> { %>
+                        <option value="<%= type.Id %>">
+                            <%= type.Type %>
+                        </option>
+                        <% }); %>
+                </select>
+            </div>
+            <div class="mx-auto">
+                <button type="submit"
+                    class="py-1 px-2 rounded text-center bg-blue-400 hover:bg-green-400 transition-all text-white">Create</button>
+            </div>
+        </form>
     </div>
 
-</form>
-</div>
+    <div>
+        <h1 class="text-center text-5xl mt-10 mb-2">Create Jobs For Your Company</h1>
+        <p class="text-center"><b class="text-red-600 mx-2">*</b>If you see no company in dropdown, please create a company first</p>
+        <form action="/company/create/job"
+            class="border bg-white w-96 mx-auto grid grid-rows-5 justify-center align-middle items-center rounded-sm py-5 gap-4 my-10">
+            <div class="grid grid-cols-[.5fr_1fr]">
+                <label for="">Job Title</label>
+                <input type="text" class="border" required>
+            </div>
+            <div class="grid grid-cols-[1fr_.5fr_.25fr_.5fr]">
+                <label for="">Pay Range</label>
+                <input type="number" placeholder="75000" class="w-20 border" required>
+                <p class="text-center"> - </p>
+                <input type="number" placeholder="95000" class="w-20 border" required>
+            </div>
+            <div class="grid grid-cols-[.75fr_1fr] items-center">
+                <label for="">Job Description</label>
+                <textarea name="" id="" class="border" required></textarea>
+            </div>
+            <div class="grid grid-cols-[.5fr_1fr]">
+                <label for="">Job Location</label>
+                <input type="text" class="border" required>
+            </div>
+            <div class="grid grid-cols-[.5fr_1fr]">
+                <label for="">Company</label>
+                <select name="" id="" class="border" required>
+                    <option value="" disabled >Select Company</option>
+                </select>
+            </div>
+            <div class="mx-auto">
+                <button type="submit" class="py-1 px-2 rounded text-center bg-blue-400 hover:bg-green-400 transition-all text-white">Add Job</button>
+            </div>
+        </form>
+    </div>
