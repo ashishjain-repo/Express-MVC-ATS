@@ -40,12 +40,13 @@ router.post('/login', async (req, res) => {
     else if (result.Id > 0) {
         req.session.isAuthorized = true;
         req.session.applicant = result.Id;
+        req.session.role = 'applicant';
         res.redirect('/applicant/dashboard');
     }
     });
 
 router.get('/dashboard', async (req, res) => {
-    if (req.session.isAuthorized == true) {
+    if (req.session.isAuthorized == true && req.session.role == 'applicant') {
         const result = await getUserDetails(req.session.applicant);
         const user = result.rows[0];
         console.log(user);
@@ -58,7 +59,7 @@ router.get('/dashboard', async (req, res) => {
     }
 });
 router.get('/settings', async (req, res) => {
-    if (req.session.isAuthorized == true) {
+    if (req.session.isAuthorized == true && req.session.role == 'applicant') {
         const result = await getUserDetails(req.session.applicant);
         const user = result.rows[0];
         console.log(user);
