@@ -34,6 +34,7 @@ router.post('/login', async (req, res) => {
     if(result > 0){
         req.session.isAuthorized = true;
         req.session.user = result;
+        req.session.role = 'company';
         res.redirect('/company/dashboard');
     }else{
         req.flash("error", "Wrong Credentials/User does not exist");
@@ -42,7 +43,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/dashboard', async(req, res) => {
-    if(req.session.isAuthorized == true){
+    if(req.session.isAuthorized == true && req.session.role == 'company'){
         res.render('company/dashboard', {title : "Company Dashboard"});
     }
     else{
@@ -53,7 +54,7 @@ router.get('/dashboard', async(req, res) => {
 });
 
 router.get('/settings', async(req, res) => {
-    if(req.session.isAuthorized == true){
+    if(req.session.isAuthorized == true && req.session.role == 'company'){
         const companyTypes = await getCompanyTypes();
         res.render('company/settings', {title : "Company Settings", companyTypes});
     }
@@ -67,6 +68,7 @@ router.get('/settings', async(req, res) => {
 router.post('/signout', async(req, res) => {
     req.session.isAuthorized = false;
     req.session.user = undefined;
+    res.clearCookie('sessionId');
     res.redirect('/company/login-register');
 });
 
