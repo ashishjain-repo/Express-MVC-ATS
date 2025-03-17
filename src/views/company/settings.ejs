@@ -2,7 +2,7 @@
     <div>
         <h1 class="text-center text-5xl my-10">Create your Company Profile Here</h1>
         <form action="/company/create"
-            class="border bg-white w-96 mx-auto grid grid-rows-3 justify-center align-middle items-center rounded-sm py-5 gap-4">
+            class="border bg-white w-96 mx-auto grid grid-rows-3 justify-center align-middle items-center rounded-sm py-5 gap-4" method="POST" enctype="multipart/form-data">
             <div class="grid grid-cols-[.75fr_1fr]">
                 <label for="">Company Name</label>
                 <input type="text" name="c_name" class="border w-48 px-1" required>
@@ -51,6 +51,11 @@
                 <label for="">Company</label>
                 <select name="" id="" class="border" required>
                     <option value="" disabled >Select Company</option>
+                    <% justCompanies.forEach((company)=> { %>
+                        <option value="<%= company.Id %>">
+                            <%= company.Name %>
+                        </option>
+                        <% }); %>
                 </select>
             </div>
             <div class="mx-auto">

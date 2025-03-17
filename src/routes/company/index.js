@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkExistingUser, addNewUser, verifyUser, getCompanyTypes } from "../../models/company/index.js";
+import { checkExistingUser, addNewUser, verifyUser, getCompanyTypes, createNewCompany, createNewJob, getUserCompanies, getJustCompanies } from "../../models/company/index.js";
 
 const router = Router();
 
@@ -44,7 +44,8 @@ router.post('/login', async (req, res) => {
 
 router.get('/dashboard', async(req, res) => {
     if(req.session.isAuthorized == true && req.session.role == 'company'){
-        res.render('company/dashboard', {title : "Company Dashboard"});
+        const companies = await getUserCompanies(req.session.user);
+        res.render('company/dashboard', {title : "Company Dashboard", companies});
     }
     else{
         req.flash("Error", "Please login");
@@ -56,7 +57,8 @@ router.get('/dashboard', async(req, res) => {
 router.get('/settings', async(req, res) => {
     if(req.session.isAuthorized == true && req.session.role == 'company'){
         const companyTypes = await getCompanyTypes();
-        res.render('company/settings', {title : "Company Settings", companyTypes});
+        const justCompanies = await getJustCompanies(req.session.user);
+        res.render('company/settings', {title : "Company Settings", companyTypes, justCompanies});
     }
     else{
         req.flash("Error", "Please login");
@@ -70,6 +72,19 @@ router.post('/signout', async(req, res) => {
     req.session.user = undefined;
     res.clearCookie('sessionId');
     res.redirect('/company/login-register');
+});
+
+router.post('/create', async(req, res) => {
+    const company = req.body.c_name;
+    const companyType = req.body.c_type;
+    const userId = req.session.user;
+    try{
+        createNewCompany(company, companyType, userId);
+        req.flash("success", "New Company Created");
+    }catch(err){
+        req.flash("error", "Unable to create a new Company");
+    }
+    res.redirect('/company/dashboard');
 });
 
 

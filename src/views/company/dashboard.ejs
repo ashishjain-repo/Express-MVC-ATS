@@ -1,5 +1,12 @@
 <%- include('./navbar') %>
 <div>
-    <h1>Your Companies</h1>
+    <h1 class="text-4xl text-center my-5">Your Companies</h1>
+    <div class="mx-auto my-10">
+        <ul class="text-center">
+            <% companies.forEach((company) => { %>
+                <li><b class="mx-5"><%= company.Name %></b><%= company.Type %></li>
+            <% }); %>
+        </ul>
+    </div>
 
 </div>
