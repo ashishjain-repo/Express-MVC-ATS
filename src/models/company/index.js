@@ -17,7 +17,7 @@ const verifyUser = async (email, password) => {
     const query = `SELECT "Id" FROM "public"."User" WHERE "Email" = $1 AND "Password" = $2`;
     const fields = [email, password];
     const result = await dbClient.query(query, fields);
-    return result.rows[0].Id;
+    return result.rows[0];
 };
 
 const getCompanyTypes = async () => {

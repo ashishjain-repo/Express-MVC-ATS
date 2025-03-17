@@ -4,6 +4,9 @@ import { checkExistingUser, addNewUser, verifyUser, getCompanyTypes, createNewCo
 const router = Router();
 
 router.get('/login-register', async (req, res) => {
+    req.session.isAuthorized = false;
+    req.session.user = undefined;
+    req.session.role = undefined;
     res.render('company/login-register', {title: 'Login/Register'});
 });
 
@@ -26,14 +29,14 @@ router.post('/register' , async (req, res) => {
     res.redirect('/company/login-register')
 });
 
+// This route will check the credentials and login in the user and also sets the session data like some user details that are necessary for other routes to function
 router.post('/login', async (req, res) => {
     const email = req.body.u_email;
     const password = req.body.u_pass;
     const result = await verifyUser(email, password);
-    console.log(result);
-    if(result > 0){
+    if(result != undefined){
         req.session.isAuthorized = true;
-        req.session.user = result;
+        req.session.user = result.Id;
         req.session.role = 'company';
         res.redirect('/company/dashboard');
     }else{
@@ -42,18 +45,18 @@ router.post('/login', async (req, res) => {
     };
 });
 
+// This route is the main page which is shown upon logging in
 router.get('/dashboard', async(req, res) => {
-    if(req.session.isAuthorized == true && req.session.role == 'company'){
+    if(req.session.isAuthorized == true && req.session.role == 'company' && req.session.user){
         const companies = await getUserCompanies(req.session.user);
         res.render('company/dashboard', {title : "Company Dashboard", companies});
     }
     else{
         req.flash("Error", "Please login");
         res.redirect('/company/login-register');
-        console.log("Error");
     }
 });
-
+// This is the page which can be access after logging in which also have forms to create new data
 router.get('/settings', async(req, res) => {
     if(req.session.isAuthorized == true && req.session.role == 'company'){
         const companyTypes = await getCompanyTypes();
@@ -63,17 +66,17 @@ router.get('/settings', async(req, res) => {
     else{
         req.flash("Error", "Please login");
         res.redirect('/company/login-register');
-        console.log("Error");
-    }
-})
+    };
+});
 
 router.post('/signout', async(req, res) => {
     req.session.isAuthorized = false;
     req.session.user = undefined;
-    res.clearCookie('sessionId');
+    req.session.role = undefined;
     res.redirect('/company/login-register');
 });
 
+// This route is accessed from dashboard and is used to create new companies for a user
 router.post('/create', async(req, res) => {
     const company = req.body.c_name;
     const companyType = req.body.c_type;

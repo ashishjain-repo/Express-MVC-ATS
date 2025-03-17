@@ -4,6 +4,9 @@ import { checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData} 
 const router = Router();
 
 router.get('/login-register', async (req, res) => {
+    req.session.isAuthorized = false;
+    req.session.applicant = undefined;
+    req.session.role = undefined;
     res.render('applicant/login-register', { title: "Login/Register" })
 });
 
@@ -32,7 +35,6 @@ router.post('/login', async (req, res) => {
     const email = req.body.u_email;
     const password = req.body.u_pass;
     const result = await verifyUser(email, password);
-    console.log(result);
     if (result == undefined) {
         req.flash("error", "Wrong Credentials/Applicant does not exist");
         res.redirect('/applicant/login-register');
@@ -46,7 +48,8 @@ router.post('/login', async (req, res) => {
     });
 
 router.get('/dashboard', async (req, res) => {
-    if (req.session.isAuthorized == true && req.session.role == 'applicant') {
+    console.log(req.session);
+    if (req.session.isAuthorized == true && req.session.role == 'applicant' && req.session.applicant) {
         const result = await getUserDetails(req.session.applicant);
         const user = result.rows[0];
         console.log(user);
@@ -75,6 +78,7 @@ router.get('/settings', async (req, res) => {
 router.post('/signout', async(req, res) => {
     req.session.isAuthorized = false;
     req.session.applicant = undefined;
+    req.session.role = undefined;
     res.redirect('/applicant/login-register');
 });
 

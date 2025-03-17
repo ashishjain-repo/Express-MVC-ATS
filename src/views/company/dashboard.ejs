@@ -1,12 +1,27 @@
 <%- include('./navbar') %>
-<div>
-    <h1 class="text-4xl text-center my-5">Your Companies</h1>
-    <div class="mx-auto my-10">
-        <ul class="text-center">
-            <% companies.forEach((company) => { %>
-                <li><b class="mx-5"><%= company.Name %></b><%= company.Type %></li>
-            <% }); %>
-        </ul>
-    </div>
+    <div>
+        <h1 class="text-4xl text-center my-5">Your Companies</h1>
+        <div class="mx-auto my-10">
+            <% if(companies.length> 0) { %>
+                <table class="border-2 mx-auto text-center">
+                    <tr class="text-white">
+                        <th class="border border-black py-1">Company Name</th>
+                        <th class="border border-black py-1">Company Type</th>
+                    </tr>
+                    <% companies.forEach((company)=> { %>
+                        <tr class="">
+                            <td class="border px-5">
+                                <%= company.Name %>
+                            </td>
+                            <td class="border px-5">
+                                <%= company.Type %>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </table>
+        </div>
+        <% } else { %>
+            <p class="text-center"><b class="mx-2 text-red-600">*</b>No Companies</p>
+            <% }; %>
 
-</div>
+    </div>
