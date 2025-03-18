@@ -21,7 +21,7 @@ const verifyUser = async(email, password) => {
 };
 
 const getUserDetails = async(id) => {
-    const query = `SELECT CONCAT("Firstname",' ',"Lastname") AS "Name", "Gender", "Email", "Phone", "LinkedIn", "FullAddress" FROM "public"."Applicant" WHERE "Id" = $1`;
+    const query = `SELECT CONCAT("Firstname",' ',"Lastname") AS "Name", "Gender", "Email", "Phone", "LinkedIn", "FullAddress", "CoverLetter" FROM "public"."Applicant" WHERE "Id" = $1`;
     const field = [id];
     const result = await dbClient.query(query, field);
     return result;

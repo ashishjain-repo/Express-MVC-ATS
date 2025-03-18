@@ -16,5 +16,9 @@
         <p>Phone: <b class="text-black"><%= user.Phone ? user.Phone : 'Not Added' %></b></p>
         <p>LinkedIn Profile: <b class="text-black"><%= user.LinkedIn ? user.LinkedIn : 'Not Added' %></b></p>
         <p>Address: <b class="text-black"><%= user.FullAddress ? user.FullAddress : 'Not Added' %></b></p>
+        <div>
+            <p>Cover Letter</p>
+            <p class="text-lg border w-[400px] block mx-auto my-2 p-2"><%= user.CoverLetter ? user.CoverLetter : 'Not Added' %></p>
+        </div>
     </div>
 </div>

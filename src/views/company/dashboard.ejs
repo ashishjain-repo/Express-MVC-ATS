@@ -30,6 +30,7 @@
                         <tr class="text-white">
                             <th class="border border-black py-1">Company Name</th>
                             <th class="border border-black py-1">Jobs</th>
+                            <th class="border border-black py-1">Delete</th>
                         </tr>
                         <% jobs.forEach((job)=> { %>
                             <tr class="">
@@ -38,6 +39,12 @@
                                 </td>
                                 <td class="border px-5">
                                     <%= job.Title %>
+                                </td>
+                                <td class="border px-5">
+                                    <form action="/company/delete/job" method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="j_id" value="<%= job.Id %>">
+                                        <button type="submit" class="font-bold text-red-900 underline cursor-pointer">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                             <% }); %>

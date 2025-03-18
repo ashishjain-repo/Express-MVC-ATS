@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkExistingUser, addNewUser, verifyUser, getCompanyTypes, createNewCompany, createNewJob, getUserCompanies, getJustCompanies, getAllJobs } from "../../models/company/index.js";
+import { checkExistingUser, addNewUser, verifyUser, getCompanyTypes, createNewCompany, createNewJob, getUserCompanies, getJustCompanies, getAllJobs, deleteJobById } from "../../models/company/index.js";
 
 const router = Router();
 
@@ -108,8 +108,12 @@ router.post('/create/job', async(req, res) => {
         req.flash("error", "Please Only Add Numeric Values for Payrange");
         res.redirect('/company/settings');
     }
-   console.log(title, pay_start, pay_end, description, location, company);
 });
 
+router.post('/delete/job', async(req, res) => {
+    const jobId = req.body.j_id;
+    await deleteJobById(jobId);
+    res.redirect('/company/dashboard');
+});
 
 export default router;
