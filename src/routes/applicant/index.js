@@ -45,8 +45,16 @@ router.post('/login', async (req, res) => {
         req.session.role = 'applicant';
         res.redirect('/applicant/dashboard');
     }
-    });
+});
 
+router.post('/signout', async(req, res) => {
+    req.session.isAuthorized = false;
+    req.session.applicant = undefined;
+    req.session.role = undefined;
+    res.redirect('/applicant/login-register');
+});
+
+// Upon Login Views
 router.get('/dashboard', async (req, res) => {
     console.log(req.session);
     if (req.session.isAuthorized == true && req.session.role == 'applicant' && req.session.applicant) {
@@ -61,6 +69,7 @@ router.get('/dashboard', async (req, res) => {
         console.log("Error");
     }
 });
+
 router.get('/settings', async (req, res) => {
     if (req.session.isAuthorized == true && req.session.role == 'applicant') {
         const result = await getUserDetails(req.session.applicant);
@@ -75,12 +84,18 @@ router.get('/settings', async (req, res) => {
     }
 });
 
-router.post('/signout', async(req, res) => {
-    req.session.isAuthorized = false;
-    req.session.applicant = undefined;
-    req.session.role = undefined;
-    res.redirect('/applicant/login-register');
-});
+router.get('/jobs', async(req, res) => {
+    if (req.session.isAuthorized == true && req.session.role == 'applicant') {
+        const result = await getUserDetails(req.session.applicant);
+        const user = result.rows[0];
+        res.render('applicant/jobs', { title: "Applicant Jobs", user });
+    }
+    else {
+        req.flash("Error", "Please login");
+        res.redirect('/applicant/login-register');
+        console.log("Error");
+    }
+})
 
 router.post('/update', async(req, res) => {
     try{

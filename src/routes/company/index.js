@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkExistingUser, addNewUser, verifyUser, getCompanyTypes, createNewCompany, createNewJob, getUserCompanies, getJustCompanies } from "../../models/company/index.js";
+import { checkExistingUser, addNewUser, verifyUser, getCompanyTypes, createNewCompany, createNewJob, getUserCompanies, getJustCompanies, getAllJobs } from "../../models/company/index.js";
 
 const router = Router();
 
@@ -49,7 +49,9 @@ router.post('/login', async (req, res) => {
 router.get('/dashboard', async(req, res) => {
     if(req.session.isAuthorized == true && req.session.role == 'company' && req.session.user){
         const companies = await getUserCompanies(req.session.user);
-        res.render('company/dashboard', {title : "Company Dashboard", companies});
+        const jobs = await getAllJobs(req.session.user);
+        console.log(jobs);
+        res.render('company/dashboard', {title : "Company Dashboard", companies, jobs});
     }
     else{
         req.flash("Error", "Please login");
@@ -88,6 +90,25 @@ router.post('/create', async(req, res) => {
         req.flash("error", "Unable to create a new Company");
     }
     res.redirect('/company/dashboard');
+});
+
+router.post('/create/job', async(req, res) => {
+    const title = req.body.j_title;
+    const pay_start = parseFloat(req.body.j_pay_start);
+    const pay_end = parseFloat(req.body.j_pay_end);
+    const description = req.body.j_description;
+    const location = req.body.j_location;
+    const company = req.body.j_company;
+    if(!isNaN(pay_start) && !isNaN(pay_end)){
+        console.log("Working");
+        await createNewJob(title, pay_start, pay_end, description, location, company);
+        req.flash("success", "You Created a New Job");
+        res.redirect('/company/dashboard');
+    }else{
+        req.flash("error", "Please Only Add Numeric Values for Payrange");
+        res.redirect('/company/settings');
+    }
+   console.log(title, pay_start, pay_end, description, location, company);
 });
 
 

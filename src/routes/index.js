@@ -19,6 +19,16 @@ router.post('/contact', async(req, res) => {
     res.redirect('/');
 });
 
+router.get('/jobs', async(req, res) => {
+    const query = `SELECT "J"."Id", "J"."Title", CONCAT("J"."PayRangeStart",' - ',"J"."PayRangeEnd") AS "Pay", "J"."Location"
+FROM "public"."Company" AS "C"
+INNER JOIN "public"."Job" AS "J"
+ON "C"."Id" = "J"."CompanyId"
+ORDER BY "J"."Id" DESC`
+const results = await dbClient.query(query);
+const jobs = results.rows;
+res.render('jobs', {title: 'All Jobs', jobs})
+});
 
 
 export default router;

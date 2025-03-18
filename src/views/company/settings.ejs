@@ -28,28 +28,28 @@
         <h1 class="text-center text-5xl mt-10 mb-2">Create Jobs For Your Company</h1>
         <p class="text-center"><b class="text-red-600 mx-2">*</b>If you see no company in dropdown, please create a company first</p>
         <form action="/company/create/job"
-            class="border bg-white w-96 mx-auto grid grid-rows-5 justify-center align-middle items-center rounded-sm py-5 gap-4 my-10">
+            class="border bg-white w-96 mx-auto grid grid-rows-5 justify-center align-middle items-center rounded-sm py-5 gap-4 my-10" method="POST" enctype="multipart/form-data">
             <div class="grid grid-cols-[.5fr_1fr]">
                 <label for="">Job Title</label>
-                <input type="text" class="border" required>
+                <input type="text" class="border" required name="j_title">
             </div>
             <div class="grid grid-cols-[1fr_.5fr_.25fr_.5fr]">
                 <label for="">Pay Range</label>
-                <input type="number" placeholder="75000" class="w-20 border" required>
+                <input type="number" placeholder="75000" class="w-20 border" required name="j_pay_start">
                 <p class="text-center"> - </p>
-                <input type="number" placeholder="95000" class="w-20 border" required>
+                <input type="number" placeholder="95000" class="w-20 border" required name="j_pay_end">
             </div>
             <div class="grid grid-cols-[.75fr_1fr] items-center">
                 <label for="">Job Description</label>
-                <textarea name="" id="" class="border" required></textarea>
+                <textarea name="j_description" id="" class="border" required></textarea>
             </div>
             <div class="grid grid-cols-[.5fr_1fr]">
                 <label for="">Job Location</label>
-                <input type="text" class="border" required>
+                <input type="text" class="border" required name="j_location">
             </div>
             <div class="grid grid-cols-[.5fr_1fr]">
                 <label for="">Company</label>
-                <select name="" id="" class="border" required>
+                <select name="j_company" id="" class="border" required>
                     <option value="" disabled >Select Company</option>
                     <% justCompanies.forEach((company)=> { %>
                         <option value="<%= company.Id %>">

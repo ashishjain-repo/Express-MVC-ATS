@@ -55,6 +55,17 @@ const getJustCompanies = async(userId) => {
     const field = [userId];
     const results = await dbClient.query(query, field);
     return results.rows;
+};
+
+const getAllJobs = async(userId) => {
+    const query = `SELECT "C"."Name", "J"."Title"
+FROM "public"."Company" AS "C"
+INNER JOIN "public"."Job" AS "J"
+ON "C"."Id" = "J"."CompanyId"
+WHERE "C"."UserId" = $1`
+const field = [userId];
+const results = await dbClient.query(query, field);
+return results.rows;
 }
 
-export { checkExistingUser, addNewUser, verifyUser, getCompanyTypes, createNewCompany, createNewJob, getUserCompanies, getJustCompanies }
+export { checkExistingUser, addNewUser, verifyUser, getCompanyTypes, createNewCompany, createNewJob, getUserCompanies, getJustCompanies, getAllJobs }
