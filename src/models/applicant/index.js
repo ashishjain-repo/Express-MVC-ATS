@@ -33,4 +33,18 @@ const updateData = async(column, data, user) => {
     dbClient.query(query, fields);
 };
 
-export {checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData}
+const allAvailableJobs = async() => {
+    const query = `SELECT "J"."Id", "J"."Title", CONCAT('$',"J"."PayRangeStart", ' <-> $',"J"."PayRangeEnd") AS "Pay", "J"."Location", "C"."Name"
+FROM "public"."Company" AS "C"
+INNER JOIN "public"."Job" AS "J"
+ON "C"."Id" = "J"."CompanyId"`
+return await dbClient.query(query);
+};
+
+const applyForJob = async(jobId, applicantId) => {
+    const query = `INSERT INTO "public"."JobApplicant" ("JobId", "ApplicantId", "CoverLetter") VALUES ($1, $2, (SELECT "CoverLetter" FROM "public"."Applicant" WHERE "Id" = $3))`;
+    const fields = [jobId, applicantId, applicantId];
+    await dbClient.query(query, fields);
+};
+
+export {checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData, allAvailableJobs, applyForJob }

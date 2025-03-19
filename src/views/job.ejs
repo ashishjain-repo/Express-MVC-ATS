@@ -1,14 +1,15 @@
-<h1>About Job</h1>
-<div>
+<h1 class="text-5xl text-center my-10">About Job</h1>
+<div class="text-3xl text-center mt-10 mb-2 grid gap-4">
 <p>Company: <b><%= job.Name %></b></p>
 <p>Company Type: <b><%= job.Type %></b></p>
 </div>
-<div>
+<div class="text-3xl text-center my-4 grid gap-4">
     <p>Job Title: <b><%= job.Title %></b></p>
     <p>Job Location: <b><%= job.Location %></b></p>
     <p>Pay Range: <b><%= job.Pay %></b></p>
 </div>
-<div>
-<p>Description: <b><%= job.Description %></b></p>
+<div class="text-4xl text-center font-semibold">
+<p class="underline">Description</p>
+<p class="block mx-auto rounded-xl bg-white w-[500px] text-xl py-5 my-5 px-2 font-bold italic"><%= job.Description %></p>
 </div>
 

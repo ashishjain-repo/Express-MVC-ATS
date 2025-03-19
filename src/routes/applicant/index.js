@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData} from "../../models/applicant/index.js";
+import { checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData, allAvailableJobs, applyForJob } from "../../models/applicant/index.js";
 
 const router = Router();
 
@@ -88,7 +88,10 @@ router.get('/jobs', async(req, res) => {
     if (req.session.isAuthorized == true && req.session.role == 'applicant') {
         const result = await getUserDetails(req.session.applicant);
         const user = result.rows[0];
-        res.render('applicant/jobs', { title: "Applicant Jobs", user });
+        const allJobs = await allAvailableJobs();
+        const jobs = allJobs.rows;
+        console.log(jobs);
+        res.render('applicant/jobs', { title: "Applicant Jobs", user, jobs });
     }
     else {
         req.flash("Error", "Please login");
@@ -117,6 +120,13 @@ router.post('/update', async(req, res) => {
         req.flash("error", "Unable to update");
         res.redirect('/applicant/dashboard');
     }
-})
+});
+
+router.post('/job/apply', async(req, res) => {
+    const jobId = req.body.j_id;
+    await applyForJob(jobId, req.session.applicant);
+    req.flash("success", "Congrats! You have Applied for a job.");
+    res.redirect('/applicant/jobs');
+});
 
 export default router;
