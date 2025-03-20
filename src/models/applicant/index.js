@@ -47,4 +47,16 @@ const applyForJob = async(jobId, applicantId) => {
     await dbClient.query(query, fields);
 };
 
-export {checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData, allAvailableJobs, applyForJob }
+const getAppliedJobs = async(userId) => {
+    const query = `SELECT DISTINCT "JA"."JobId", "J"."Title", "C"."Name", TO_CHAR("JA"."AppliedOn", 'Month DD, YYYY') AS "AppliedOn", "JA"."IsSeen"
+FROM "public"."Company" AS "C"
+INNER JOIN "public"."Job" AS "J"
+ON "C"."Id" = "J"."CompanyId"
+INNER JOIN "public"."JobApplicant" AS "JA"
+ON "J"."Id" = "JA"."JobId"
+WHERE "JA"."ApplicantId" = $1`;
+const field = [userId];
+const results = await dbClient.query(query, field);
+return results;
+};
+export {checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData, allAvailableJobs, applyForJob, getAppliedJobs }

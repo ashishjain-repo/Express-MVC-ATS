@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData, allAvailableJobs, applyForJob } from "../../models/applicant/index.js";
+import { checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData, allAvailableJobs, applyForJob, getAppliedJobs } from "../../models/applicant/index.js";
 
 const router = Router();
 
@@ -60,8 +60,10 @@ router.get('/dashboard', async (req, res) => {
     if (req.session.isAuthorized == true && req.session.role == 'applicant' && req.session.applicant) {
         const result = await getUserDetails(req.session.applicant);
         const user = result.rows[0];
-        console.log(user);
-        res.render('applicant/dashboard', { title: "Applicant Dashboard", user });
+        const jobsArr = await getAppliedJobs(req.session.applicant);
+        const jobs = jobsArr.rows;
+        console.log(jobs);
+        res.render('applicant/dashboard', { title: "Applicant Dashboard", user, jobs });
     }
     else {
         req.flash("Error", "Please login");
