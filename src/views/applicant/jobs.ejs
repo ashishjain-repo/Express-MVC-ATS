@@ -1,27 +1,27 @@
 <%- include('./navbar') %>
 
 <h1 class="text-4xl text-center my-5">Jobs Available</h1>
-<div>
-    <table class="border-2 mx-auto text-center my-10">
-        <tr class="text-white">
-            <th class="border border-black py-1 px-1">Job Title</th>
-            <th class="border border-black py-1 px-1">Expected Pay</th>
-            <th class="border border-black py-1 px-1">Location</th>
-            <th class="border border-black py-1 px-1">Company Name</th>
-            <th class="border border-black py-1 px-1">Apply</th>
+<div class="">
+    <% if(jobs.length > 0) { %>
+    <table class="mx-auto text-center my-10 bg-white rounded-xl">
+        <tr class="">
+            <th class="py-2 px-5">Job Title</th>
+            <th class="border-x py-2 px-5">Expected Pay</th>
+            <th class="border-x py-2 px-5">Location</th>
+            <th class="border-x py-2 px-5">Company Name</th>
+            <th class="py-2 px-5">Apply</th>
         </tr>
-        <% if(jobs.length > 0) { %>
             <% jobs.forEach((job) => { %>
-                <tr class="font-semibold">
-                    <td class="border px-5 py-2"><%= job.Title %></td>
-                    <td class="border px-5 py-2"><%= job.Pay %></td>
-                    <td class="border px-5 py-2"><%= job.Location %></td>
-                    <td class="border px-5 py-2"><%= job.Name %></td>
-                    <td class="border px-5 py-2"><form action="/applicant/job/apply" method="POST" enctype="multipart/form-data"><input type="hidden" name="j_id" value="<%= job.Id %>"><button type="submit" class="text-yellow-500 font-bold cursor-pointer hover:text-red-400 transition-all duration-300">Click Me!</button></form></td>
+                <tr class="">
+                    <td class="border-t py-2 px-5"><%= job.Title %></td>
+                    <td class="border-x border-t py-2 px-5"><%= job.Pay %></td>
+                    <td class="border-x border-t py-2 px-5"><%= job.Location %></td>
+                    <td class="border-x border-t py-2 px-5"><%= job.Name %></td>
+                    <td class="border-t py-2 px-5"><form action="/applicant/job/apply" method="POST" enctype="multipart/form-data"><input type="hidden" name="j_id" value="<%= job.Id %>"><button type="submit" class="text-blue-500 font-bold cursor-pointer hover:text-green-500 transition-all duration-300">Click Me!</button></form></td>
                 </tr>
             <% }); %>
         <% } else { %>
-            <p>No jobs available at the moment</p>
+            <p class="text-center text-xl my-5"><b class="text-red-500 mx-2">*</b>No jobs available at the moment</p>
         <% } %>
     </table>
 </div>

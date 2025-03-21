@@ -1,19 +1,19 @@
 <h1 class="text-5xl text-center my-5">All Jobs</h1>
 <div>
     <% if(jobs.length > 0){ %>
-        <table class="border-2 mx-auto text-center my-10">
-            <tr class="text-white">
-                <th class="border border-black py-1">Job Title</th>
-                <th class="border border-black py-1">Job Payrange</th>
-                <th class="border border-black py-1">Job Location</th>
-                <th class="border border-black py-1">More Info</th>
+        <table class="mx-auto text-center my-10 bg-white rounded-xl">
+            <tr class="">
+                <th class="py-2 px-5">Job Title</th>
+                <th class="border-x py-2 px-5">Job Payrange</th>
+                <th class="border-x py-2 px-5">Job Location</th>
+                <th class="py-2 px-5">More Info</th>
             </tr>
             <% jobs.forEach((job) => { %>
                 <tr>
-                    <td class="border px-5 py-2"><%= job.Title %></td>
-                    <td class="border px-5 py-2"><%= job.Pay %></td>
-                    <td class="border px-5 py-2"><%= job.Location %></td>
-                    <td class="border px-5 py-2"><a href="/job/<%= job.Id %>" class="text-yellow-300 underline font-bold">More Info</a></td>
+                    <td class="border-t py-2 px-5"><%= job.Title %></td>
+                    <td class="border-x border-t py-2 px-5"><%= job.Pay %></td>
+                    <td class="border-x border-t py-2 px-5"><%= job.Location %></td>
+                    <td class="border-t py-2 px-5"><a href="/job/<%= job.Id %>" class="text-blue-700 underline font-bold">More Info</a></td>
                 </tr>
             <% }) %>
         </table>

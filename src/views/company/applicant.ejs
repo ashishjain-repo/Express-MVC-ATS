@@ -1,0 +1,21 @@
+<div class="mx-auto bg-white rounded-xl w-[500px] my-20 text-center py-10 grid gap-5">
+    <% if(applicant.length > 0) { %>
+<p>Applicant Name: <b><%= applicant[0].ApplicantName %></b></p>
+<p>Applicant Email: <b><%= applicant[0].Email %></b></p>
+<p>Applicant Gender: <b><%= applicant[0].Gender %></b></p>
+<p>Applicant LinkedIn: 
+    <% if (applicant[0].LinkedIn) { %> 
+        <a href="<%= applicant[0].LinkedIn %>" target="_blank" class="text-blue-600 underline font-semibold">LinkedIn</a> 
+    <% } else { %> 
+        <b>Not Updated By The Applicant</b> 
+    <% } %>
+</p>
+<p>Applicant Full Address: <b><%= applicant[0].FullAddress ? applicant[0].FullAddress : 'Not Updated By The Applicant' %></b></p>
+<div>
+    <p>Cover Letter</p>
+    <p><b><%= applicant[0].CoverLetter ? applicant[0].CoverLetter : 'No Cover Letter Available' %></b></p>
+</div>
+<% } else { %>
+    <p>No Applicant Exist For Provided Position</p>
+<% } %>
+</div>

@@ -1,0 +1,59 @@
+<%- include('./navbar') %>
+
+<div>
+    <h1 class="text-center text-4xl my-5">Current Applicants (Not Processed)</h1>
+    <% if(applicants.length > 0){ %>
+        <table class="mx-auto text-center my-10 bg-white rounded-xl">
+            <tr class="">
+                <th class="py-2 border-r px-5">Applicant Name</th>
+                <th class="py-2 border-x px-5">Job Title</th>
+                <th class="py-2 border-x px-5">Company</th>
+                <th class="py-2 border-x px-5">Move Forward</th>
+                <th class="py-2 border-l px-5">More Info</th>
+            </tr>
+            <% applicants.forEach((applicant)=> { %>
+                <tr class="">
+                    <td class="border-t border-r py-2 px-5"><%= applicant.ApplicantName %></td>
+                    <td class="border-t border-x py-2 px-5"><%= applicant.Title %></td>
+                    <td class="border-t border-x py-2 px-5"><%= applicant.Name %></td>
+                    <td class="border-t border-x py-2 px-5">
+                        <form action="/company/process" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="ja_applicant" value="<%= applicant.Id %>">
+                            <input type="hidden" name="ja_job" value="<%= applicant.Job %>">
+                            <button type="submit" class="text-green-400 font-semibold cursor-pointer">Process</button>
+                        </form>
+                    </td>
+                    <td class="border-t border-l py-2 px-5"><a target="_blank" class="font-semibold text-blue-600 underline" href="/company/applicant/<%= applicant.Job %>">Show More</a></td>
+                </tr>
+                <% }); %>
+        </table>
+
+    <% } else { %>
+        <p class="text-center text-xl"><b class="text-red-400 mx-2">*</b>No Applicants Yet</p>
+        <% }; %>
+</div>
+
+<div>
+    <h1 class="text-center text-4xl my-5">Processed Applicants</h1>
+    <% if(doneApplicants.length > 0){ %>
+        <table class="mx-auto text-center my-10 bg-white rounded-xl">
+            <tr class="">
+                <th class="py-2 border-r px-5">Applicant Name</th>
+                <th class="py-2 border-x px-5">Job Title</th>
+                <th class="py-2 border-x px-5">Company</th>
+                <th class="py-2 border-l px-5">More Info</th>
+            </tr>
+            <% doneApplicants.forEach((applicant)=> { %>
+                <tr class="">
+                    <td class="border-t border-r py-2 px-5"><%= applicant.ApplicantName %></td>
+                    <td class="border-t border-x py-2 px-5"><%= applicant.Title %></td>
+                    <td class="border-t border-x py-2 px-5"><%= applicant.Name %></td>
+                    <td class="border-t border-l py-2 px-5"><a target="_blank" class="font-semibold text-blue-600 underline" href="/company/applicant/<%= applicant.Id %>">Show More</a></td>
+                </tr>
+                <% }); %>
+        </table>
+
+    <% } else { %>
+        <p class="text-center text-xl"><b class="text-red-400 mx-2">*</b>No Processed Applicants</p>
+        <% } %>
+</div>

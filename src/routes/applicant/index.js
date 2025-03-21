@@ -4,9 +4,7 @@ import { checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData, 
 const router = Router();
 
 router.get('/login-register', async (req, res) => {
-    req.session.isAuthorized = false;
-    req.session.applicant = undefined;
-    req.session.role = undefined;
+    req.session.user = undefined;
     res.render('applicant/login-register', { title: "Login/Register" })
 });
 
@@ -66,7 +64,7 @@ router.get('/dashboard', async (req, res) => {
         res.render('applicant/dashboard', { title: "Applicant Dashboard", user, jobs });
     }
     else {
-        req.flash("Error", "Please login");
+        req.flash("error", "Please login");
         res.redirect('/applicant/login-register');
         console.log("Error");
     }
@@ -80,7 +78,7 @@ router.get('/settings', async (req, res) => {
         res.render('applicant/settings', { title: "Applicant Settings", user });
     }
     else {
-        req.flash("Error", "Please login");
+        req.flash("error", "Please login");
         res.redirect('/applicant/login-register');
         console.log("Error");
     }
@@ -96,7 +94,7 @@ router.get('/jobs', async(req, res) => {
         res.render('applicant/jobs', { title: "Applicant Jobs", user, jobs });
     }
     else {
-        req.flash("Error", "Please login");
+        req.flash("error", "Please login");
         res.redirect('/applicant/login-register');
         console.log("Error");
     }

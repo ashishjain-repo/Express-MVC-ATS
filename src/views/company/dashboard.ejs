@@ -3,19 +3,15 @@
         <h1 class="text-4xl text-center my-5">Your Companies</h1>
         <div class="mx-auto my-10">
             <% if(companies.length> 0) { %>
-                <table class="border-2 mx-auto text-center">
-                    <tr class="text-white">
-                        <th class="border border-black py-1">Company Name</th>
-                        <th class="border border-black py-1">Company Type</th>
+                <table class="mx-auto text-center my-10 bg-white rounded-xl">
+                    <tr class="">
+                        <th class="py-2 border-r px-5">Company Name</th>
+                        <th class="py-2 border-l px-5">Company Type</th>
                     </tr>
                     <% companies.forEach((company)=> { %>
                         <tr class="">
-                            <td class="border px-5">
-                                <%= company.Name %>
-                            </td>
-                            <td class="border px-5">
-                                <%= company.Type %>
-                            </td>
+                            <td class="border-t border-r py-2 px-5"><%= company.Name %></td>
+                            <td class="border-t border-l py-2 px-5"><%= company.Type %></td>
                         </tr>
                         <% }); %>
                 </table>
@@ -26,21 +22,17 @@
             <h1 class="text-4xl text-center my-5">Your Job Listing</h1>
             <div class="mx-auto my-10">
                 <% if(jobs.length> 0) { %>
-                    <table class="border-2 mx-auto text-center">
-                        <tr class="text-white">
-                            <th class="border border-black py-1">Company Name</th>
-                            <th class="border border-black py-1">Jobs</th>
-                            <th class="border border-black py-1">Delete</th>
+                    <table class="mx-auto text-center my-10 bg-white rounded-xl">
+                        <tr class="">
+                            <th class="py-2 px-5">Company Name</th>
+                            <th class="border-x py-2 px-5">Jobs</th>
+                            <th class="py-2 px-5">Delete</th>
                         </tr>
                         <% jobs.forEach((job)=> { %>
                             <tr class="">
-                                <td class="border px-5">
-                                    <%= job.Name %>
-                                </td>
-                                <td class="border px-5">
-                                    <%= job.Title %>
-                                </td>
-                                <td class="border px-5">
+                                <td class="border-t py-2 px-5"><%= job.Name %></td>
+                                <td class="border-t border-x py-2 px-5"><%= job.Title %></td>
+                                <td class="border-t py-2 px-5">
                                     <form action="/company/delete/job" method="POST" enctype="multipart/form-data">
                                         <input type="hidden" name="j_id" value="<%= job.Id %>">
                                         <button type="submit" class="font-bold text-red-900 underline cursor-pointer">Delete</button>

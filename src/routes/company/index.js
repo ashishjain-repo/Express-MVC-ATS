@@ -1,12 +1,10 @@
 import { Router } from "express";
-import { checkExistingUser, addNewUser, verifyUser, getCompanyTypes, createNewCompany, createNewJob, getUserCompanies, getJustCompanies, getAllJobs, deleteJobById } from "../../models/company/index.js";
+import { checkExistingUser, addNewUser, verifyUser, getCompanyTypes, createNewCompany, createNewJob, getUserCompanies, getJustCompanies, getAllJobs, deleteJobById, getNotProcessedApplicants,processApplicant, showApplicantDetails, getProcessedApplicants } from "../../models/company/index.js";
 
 const router = Router();
 
 router.get('/login-register', async (req, res) => {
-    req.session.isAuthorized = false;
-    req.session.user = undefined;
-    req.session.role = undefined;
+    req.session.applicant = undefined;
     res.render('company/login-register', {title: 'Login/Register'});
 });
 
@@ -50,11 +48,10 @@ router.get('/dashboard', async(req, res) => {
     if(req.session.isAuthorized == true && req.session.role == 'company' && req.session.user){
         const companies = await getUserCompanies(req.session.user);
         const jobs = await getAllJobs(req.session.user);
-        console.log(jobs);
         res.render('company/dashboard', {title : "Company Dashboard", companies, jobs});
     }
     else{
-        req.flash("Error", "Please login");
+        req.flash("error", "Please login");
         res.redirect('/company/login-register');
     }
 });
@@ -66,10 +63,33 @@ router.get('/settings', async(req, res) => {
         res.render('company/settings', {title : "Company Settings", companyTypes, justCompanies});
     }
     else{
-        req.flash("Error", "Please login");
+        req.flash("error", "Please login");
         res.redirect('/company/login-register');
     };
 });
+// This is the main view for Applicants page
+router.get('/applicants', async(req, res) => {
+    if(req.session.isAuthorized == true && req.session.role == 'company'){
+        const applicants = await getNotProcessedApplicants(req.session.user);
+        const doneApplicants = await getProcessedApplicants(req.session.user);
+        res.render('company/applicants', {title : "Company Job Applicants", applicants, doneApplicants});
+    }else{
+        req.flash("error", "Please login");
+        res.redirect('/company/login-register');
+    };
+});
+
+router.get('/applicant/:id', async(req, res) => {
+    if(req.session.isAuthorized == true && req.session.role == 'company'){
+        const jobId = req.params.id;
+        const applicant = await showApplicantDetails(jobId);
+        console.log(applicant);
+        res.render('company/applicant', {title : "Applicant Personal Details", applicant});
+    }else{
+        req.flash("error", "Unauthorized Access");
+        res.redirect('/company/login-register');
+    }
+})
 
 router.post('/signout', async(req, res) => {
     req.session.isAuthorized = false;
@@ -115,5 +135,16 @@ router.post('/delete/job', async(req, res) => {
     await deleteJobById(jobId);
     res.redirect('/company/dashboard');
 });
+
+router.post('/process', async(req, res) => {
+    try{
+        const applicantId = req.body.ja_applicant;
+        const jobId = req.body.ja_job;
+        await processApplicant(applicantId, jobId);
+    }catch(err){
+        req.flash("error", "Cannot Process The Request");
+    }
+    res.redirect('/company/applicants');
+})
 
 export default router;
