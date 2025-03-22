@@ -51,7 +51,7 @@ if (process.env.NODE_ENV.toLowerCase().includes('dev')) {
 // Setup function that can be used on server startup
 export const setupDatabase = async () => {
     console.log('This feature is not yet implemented.');
-    const sql = fs.readFileSync('./ats.sql', 'utf-8');
+    const sql = fs.readFileSync('./src/models/ats.sql', 'utf-8');
     await dbClient.exec(sql);
 };
 

@@ -11,6 +11,9 @@ import { configureStaticPaths } from './src/utils/index.js';
 import { fileURLToPath } from 'url';
 import { testDatabase } from './src/models/index.js';
 
+// Error Handler
+import { globalErrorHandler, notFoundHandler } from './src/middleware/error-handler.js';
+
 // Other Routes
 import companyRoute from './src/routes/company/index.js';
 import applicantRoute from './src/routes/applicant/index.js';
@@ -56,6 +59,17 @@ app.use(session({
     }
 }));
 
+// Setting the user and applicant sessions
+app.use((req, res, next) => {
+    if (req.session.isAuthorized === undefined) {
+        req.session.isAuthorized = false;
+        req.session.user = undefined;
+        req.session.applicant = undefined;
+        req.session.role = undefined;
+    }
+    next();
+});
+
 // Configure the application based on environment settings
 app.use(configNodeEnv);
 
@@ -91,6 +105,8 @@ app.use('/', homeRoute);
 app.use('/company', companyRoute);
 app.use('/applicant', applicantRoute);
 
+app.use(notFoundHandler);
+app.use(globalErrorHandler);
 /**
  * Start the server
  */

@@ -44,13 +44,20 @@
                 <th class="border-x py-2 px-5">Company</th>
                 <th class="border-x py-2 px-5">Applied On</th>
                 <th class="py-2 px-5">Processed</th>
+                <th class="border-x py-2 px-5">Withdraw Application</th>
             </tr>
             <% jobs.forEach((job) => { %>
                 <tr class="">
                     <td class="border-t py-2 px-5"><%= job.Title %></td>
                     <td class="border-x border-t py-2 px-5"><%= job.Name %></td>
                     <td class="border-x border-t py-2 px-5"><%= job.AppliedOn %></td>
-                    <td class="border-t py-2 px-5"><b class="border border-white rounded-full w-3 h-3 inline-block <%= job.IsSeen ? 'bg-green-600' : 'bg-red-600' %>"></b></td>
+                    <td class="border-x border-t py-2 px-5"><b class="border border-white rounded-full w-3 h-3 inline-block <%= job.IsSeen ? 'bg-green-600' : 'bg-red-600' %>"></b></td>
+                    <td class="border-t py-2 px-5">
+                        <form action="/applicant/job/withdraw" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="ja_id" value="<%= job.Withdraw %>">
+                            <button class="text-red-500 cursor-pointer">Withdraw</button>
+                        </form>
+                    </td>
                 </tr>
             <% }); %>
         </table>

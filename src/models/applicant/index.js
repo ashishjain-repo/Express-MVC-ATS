@@ -33,12 +33,14 @@ const updateData = async(column, data, user) => {
     dbClient.query(query, fields);
 };
 
-const allAvailableJobs = async() => {
+const allAvailableJobs = async(applicantId) => {
     const query = `SELECT "J"."Id", "J"."Title", CONCAT('$',"J"."PayRangeStart", ' <-> $',"J"."PayRangeEnd") AS "Pay", "J"."Location", "C"."Name"
 FROM "public"."Company" AS "C"
 INNER JOIN "public"."Job" AS "J"
-ON "C"."Id" = "J"."CompanyId"`
-return await dbClient.query(query);
+ON "C"."Id" = "J"."CompanyId"
+    WHERE "J"."Id" NOT IN (SELECT "JobId" FROM "public"."JobApplicant" WHERE "ApplicantId" = $1);`
+    const field = [applicantId]
+return await dbClient.query(query, field);
 };
 
 const applyForJob = async(jobId, applicantId) => {
@@ -48,7 +50,7 @@ const applyForJob = async(jobId, applicantId) => {
 };
 
 const getAppliedJobs = async(userId) => {
-    const query = `SELECT DISTINCT "JA"."JobId", "J"."Title", "C"."Name", TO_CHAR("JA"."AppliedOn", 'Month DD, YYYY') AS "AppliedOn", "JA"."IsSeen"
+    const query = `SELECT DISTINCT "JA"."Id" AS "Withdraw", "JA"."JobId", "J"."Title", "C"."Name", TO_CHAR("JA"."AppliedOn", 'Month DD, YYYY') AS "AppliedOn", "JA"."IsSeen"
 FROM "public"."Company" AS "C"
 INNER JOIN "public"."Job" AS "J"
 ON "C"."Id" = "J"."CompanyId"
@@ -59,4 +61,10 @@ const field = [userId];
 const results = await dbClient.query(query, field);
 return results;
 };
-export {checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData, allAvailableJobs, applyForJob, getAppliedJobs }
+
+const withdrawApplication = async(jobApplicantId) => {
+    const query = `DELETE FROM "public"."JobApplicant" WHERE "Id" = $1`;
+    const field = [jobApplicantId];
+    await dbClient.query(query,field);
+};
+export {checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData, allAvailableJobs, applyForJob, getAppliedJobs, withdrawApplication }

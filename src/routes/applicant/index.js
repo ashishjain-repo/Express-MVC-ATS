@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData, allAvailableJobs, applyForJob, getAppliedJobs } from "../../models/applicant/index.js";
+import { checkExistingUser, addNewUser, verifyUser, getUserDetails, updateData, allAvailableJobs, applyForJob, getAppliedJobs, withdrawApplication } from "../../models/applicant/index.js";
 
 const router = Router();
 
@@ -88,7 +88,7 @@ router.get('/jobs', async(req, res) => {
     if (req.session.isAuthorized == true && req.session.role == 'applicant') {
         const result = await getUserDetails(req.session.applicant);
         const user = result.rows[0];
-        const allJobs = await allAvailableJobs();
+        const allJobs = await allAvailableJobs(req.session.applicant);
         const jobs = allJobs.rows;
         console.log(jobs);
         res.render('applicant/jobs', { title: "Applicant Jobs", user, jobs });
@@ -127,6 +127,13 @@ router.post('/job/apply', async(req, res) => {
     await applyForJob(jobId, req.session.applicant);
     req.flash("success", "Congrats! You have Applied for a job.");
     res.redirect('/applicant/jobs');
+});
+
+router.post('/job/withdraw', async(req, res) => {
+    const jobApplicantId = req.body.ja_id;
+    await withdrawApplication(jobApplicantId);
+    req.flash("success","Application Withdrawn");
+    res.redirect("/applicant/dashboard");
 });
 
 export default router;
