@@ -50,9 +50,13 @@ if (process.env.NODE_ENV.toLowerCase().includes('dev')) {
 
 // Setup function that can be used on server startup
 export const setupDatabase = async () => {
-    console.log('This feature is not yet implemented.');
+    // console.log('This feature is not yet implemented.');
     const sql = fs.readFileSync('./src/models/ats.sql', 'utf-8');
-    await dbClient.exec(sql);
+    try{
+        await dbClient.query(sql);
+    }catch(err){
+        console.log("Already Exists");
+    }
 };
 
 // Test function that can be used to test the database

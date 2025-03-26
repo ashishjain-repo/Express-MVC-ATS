@@ -9,7 +9,7 @@ import layouts from './src/middleware/layouts.js';
 import path from "path";
 import { configureStaticPaths } from './src/utils/index.js';
 import { fileURLToPath } from 'url';
-import { testDatabase } from './src/models/index.js';
+import { setupDatabase, testDatabase } from './src/models/index.js';
 
 // Error Handler
 import { globalErrorHandler, notFoundHandler } from './src/middleware/error-handler.js';
@@ -133,6 +133,7 @@ if (mode.includes('dev')) {
 
 // Start the Express server
 app.listen(port, async () => {
+    await setupDatabase();
     await testDatabase();
     console.log(`Server running on http://127.0.0.1:${port}`);
 });
